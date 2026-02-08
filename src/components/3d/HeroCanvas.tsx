@@ -39,7 +39,7 @@ function Stars(props: any) {
             <Points ref={ref} positions={sphere} stride={3} frustumCulled={false} {...props}>
                 <PointMaterial
                     transparent
-                    color="#f272c8"
+                    color="#d8b4fe" // Light Violet/Lilac
                     size={0.002}
                     sizeAttenuation={true}
                     depthWrite={false}
@@ -64,7 +64,7 @@ function FloatingShape() {
             <mesh ref={meshRef} position={[0, 0, 0]} scale={2.5}>
                 <icosahedronGeometry args={[1, 1]} />
                 <meshStandardMaterial
-                    color="#4f46e5" // Indigo-600
+                    color="#7c3aed" // Violet-600
                     roughness={0.1}
                     metalness={0.8}
                     wireframe
@@ -73,7 +73,7 @@ function FloatingShape() {
             <mesh ref={meshRef} position={[0, 0, 0]} scale={2.5}>
                 <icosahedronGeometry args={[1, 1]} />
                 <meshStandardMaterial
-                    color="#818cf8" // Indigo-400
+                    color="#a78bfa" // Violet-400
                     opacity={0.1}
                     transparent
                     roughness={0.1}

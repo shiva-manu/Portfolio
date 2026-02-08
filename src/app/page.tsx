@@ -1,6 +1,9 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroCanvas from "@/components/3d/HeroCanvas";
+import SkillsCloud from "@/components/3d/SkillsCloud";
+import ContactShape from "@/components/3d/ContactShape";
+import { TiltCard, TiltCardContent } from "@/components/3d/TiltCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -45,8 +48,11 @@ export default async function Home() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <HeroCanvas />
+        <div className="absolute inset-0 z-0">
+          <SkillsCloud />
+        </div>
         <div className="container mx-auto px-4 z-10 text-center">
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 mb-6 drop-shadow-md">
+          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-violet-500 mb-6 drop-shadow-md">
             Hi, I'm Mani
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
@@ -54,7 +60,7 @@ export default async function Home() {
             Focused on performance, aesthetics, and user interaction.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg" className="rounded-full px-8 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-lg text-white font-medium">
+            <Button size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90 shadow-lg text-primary-foreground font-medium">
               View Work
             </Button>
             <Button size="lg" variant="outline" className="rounded-full px-8 border-2 border-primary/20 hover:border-primary/50 text-foreground font-medium backdrop-blur-sm">
@@ -64,49 +70,54 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
+      <section id="about" className="py-20 bg-muted/30 relative overflow-hidden">
+        <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">About Me</h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold tracking-tight mb-4 drop-shadow-sm">About Me</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto backdrop-blur-sm bg-background/30 p-4 rounded-lg">
               I'm passionate about creating beautiful and functional web applications.
               With expertise in modern frontend frameworks and backend technologies,
               I bring ideas to life with clean code and intuitive design.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="hover:shadow-lg transition-shadow duration-300 border-primary/10">
-              <CardHeader>
-                <CardTitle>Frontend</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-wrap gap-2">
-                {["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js"].map((tech) => (
-                  <Badge key={tech} variant="secondary">{tech}</Badge>
-                ))}
-              </CardContent>
-            </Card>
-            <Card className="hover:shadow-lg transition-shadow duration-300 border-primary/10">
-              <CardHeader>
-                <CardTitle>Backend</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-wrap gap-2">
-                {["Node.js", "Express", "PostgreSQL", "MongoDB", "GraphQL"].map((tech) => (
-                  <Badge key={tech} variant="secondary">{tech}</Badge>
-                ))}
-              </CardContent>
-            </Card>
-            <Card className="hover:shadow-lg transition-shadow duration-300 border-primary/10">
-              <CardHeader>
-                <CardTitle>Tools</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-wrap gap-2">
-                {["Git", "Docker", "AWS", "Figma", "VS Code"].map((tech) => (
-                  <Badge key={tech} variant="secondary">{tech}</Badge>
-                ))}
-              </CardContent>
-            </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 backdrop-blur-sm">
+            <TiltCard>
+              <Card className="hover:shadow-lg transition-shadow duration-300 border-primary/20 bg-card/60 h-full">
+                <CardHeader>
+                  <CardTitle className="text-xl">Frontend</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                  {["React", "Next.js", "TypeScript", "Tailwind CSS", "Three.js"].map((tech) => (
+                    <Badge key={tech} variant="secondary" className="bg-primary/10 hover:bg-primary/20 transform hover:scale-105 transition-transform">{tech}</Badge>
+                  ))}
+                </CardContent>
+              </Card>
+            </TiltCard>
+            <TiltCard>
+              <Card className="hover:shadow-lg transition-shadow duration-300 border-primary/20 bg-card/60 h-full">
+                <CardHeader>
+                  <CardTitle className="text-xl">Backend</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                  {["Node.js", "Express", "PostgreSQL", "MongoDB", "GraphQL"].map((tech) => (
+                    <Badge key={tech} variant="secondary" className="bg-primary/10 hover:bg-primary/20 transform hover:scale-105 transition-transform">{tech}</Badge>
+                  ))}
+                </CardContent>
+              </Card>
+            </TiltCard>
+            <TiltCard>
+              <Card className="hover:shadow-lg transition-shadow duration-300 border-primary/20 bg-card/60 h-full">
+                <CardHeader>
+                  <CardTitle className="text-xl">Tools</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2">
+                  {["Git", "Docker", "AWS", "Figma", "VS Code"].map((tech) => (
+                    <Badge key={tech} variant="secondary" className="bg-primary/10 hover:bg-primary/20 transform hover:scale-105 transition-transform">{tech}</Badge>
+                  ))}
+                </CardContent>
+              </Card>
+            </TiltCard>
           </div>
         </div>
       </section>
@@ -124,32 +135,36 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {repos.length > 0 ? (
               repos.map((repo) => (
-                <Card key={repo.id} className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-muted flex flex-col h-full">
-                  <div className="h-32 bg-muted/50 relative overflow-hidden flex-shrink-0">
-                    <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30 text-2xl font-bold group-hover:scale-105 transition-transform duration-500 uppercase px-4 text-center">
-                      {repo.name}
-                    </div>
-                  </div>
-                  <CardHeader className="flex-grow">
-                    <CardTitle className="truncate" title={repo.name}>{repo.name}</CardTitle>
-                    <CardDescription className="line-clamp-3">
-                      {repo.description || "No description available for this project."}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {repo.language && <Badge variant="outline">{repo.language}</Badge>}
-                      <Badge variant="secondary">⭐ {repo.stargazers_count}</Badge>
-                    </div>
-                  </CardContent>
-                  <CardFooter className="mt-auto">
-                    <Button asChild variant="ghost" className="w-full hover:bg-primary/5 group-hover:text-primary transition-colors">
-                      <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                        View Project &rarr;
-                      </a>
-                    </Button>
-                  </CardFooter>
-                </Card>
+                <TiltCard key={repo.id} className="h-full">
+                  <Card className="overflow-hidden group transition-all duration-300 border-muted flex flex-col h-full bg-card/80 backdrop-blur-sm hover:border-primary/50">
+                    <TiltCardContent className="transform-style-3d">
+                      <div className="h-32 bg-muted/50 relative overflow-hidden flex-shrink-0 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                        <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30 text-2xl font-bold uppercase px-4 text-center [transform:translateZ(20px)]">
+                          {repo.name}
+                        </div>
+                      </div>
+                    </TiltCardContent>
+                    <CardHeader className="flex-grow">
+                      <CardTitle className="truncate text-xl" title={repo.name}>{repo.name}</CardTitle>
+                      <CardDescription className="line-clamp-3">
+                        {repo.description || "No description available for this project."}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {repo.language && <Badge variant="outline" className="border-primary/30">{repo.language}</Badge>}
+                        <Badge variant="secondary" className="bg-primary/10">⭐ {repo.stargazers_count}</Badge>
+                      </div>
+                    </CardContent>
+                    <CardFooter className="mt-auto">
+                      <Button asChild variant="ghost" className="w-full hover:bg-primary/20 group-hover:text-primary transition-colors">
+                        <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
+                          View Project &rarr;
+                        </a>
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </TiltCard>
               ))
             ) : (
               <div className="col-span-full text-center text-muted-foreground">
@@ -171,6 +186,9 @@ export default async function Home() {
           </div>
 
           <Card className="p-6 shadow-lg border-primary/10">
+            <div className="mb-8">
+              <ContactShape />
+            </div>
             <form className="space-y-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Name</label>
@@ -184,7 +202,7 @@ export default async function Home() {
                 <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Message</label>
                 <Textarea placeholder="Share your thoughts..." className="min-h-[120px]" />
               </div>
-              <Button type="submit" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium shadow-md">
+              <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-medium shadow-md">
                 Send Message
               </Button>
             </form>
