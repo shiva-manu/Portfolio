@@ -18,6 +18,7 @@ interface Repo {
   stargazers_count: number;
   language: string;
   updated_at: string;
+  homepage?: string | null;
 }
 
 async function getRepos(): Promise<Repo[]> {
@@ -156,12 +157,19 @@ export default async function Home() {
                         <Badge variant="secondary" className="bg-primary/10">⭐ {repo.stargazers_count}</Badge>
                       </div>
                     </CardContent>
-                    <CardFooter className="mt-auto">
-                      <Button asChild variant="ghost" className="w-full hover:bg-primary/20 group-hover:text-primary transition-colors">
+                    <CardFooter className="mt-auto flex gap-2">
+                      <Button asChild variant="ghost" className="flex-1 hover:bg-primary/20 group-hover:text-primary transition-colors text-xs px-2">
                         <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                          View Project &rarr;
+                          Repo &rarr;
                         </a>
                       </Button>
+                      {repo.homepage && (
+                        <Button asChild variant="outline" className="flex-1 border-primary/20 hover:bg-primary/10 text-xs px-2">
+                          <a href={repo.homepage} target="_blank" rel="noopener noreferrer">
+                            Live Demo ↗
+                          </a>
+                        </Button>
+                      )}
                     </CardFooter>
                   </Card>
                 </TiltCard>

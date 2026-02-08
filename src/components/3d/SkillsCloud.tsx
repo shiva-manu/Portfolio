@@ -2,7 +2,7 @@
 
 import { useRef, useState, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Text, OrbitControls } from "@react-three/drei";
+import { Text, Line } from "@react-three/drei";
 import * as THREE from "three";
 
 const skills = [
@@ -14,7 +14,11 @@ const skills = [
 
 function Word({ children, ...props }: any) {
     const color = new THREE.Color();
-    const fontProps = { fontSize: 2.5, letterSpacing: -0.05, lineHeight: 1, "material-toneMapped": false };
+    const { viewport } = useThree();
+    // Responsive font size: 2.5 on desktop, scaled down on mobile
+    const fontSize = Math.max(1.2, Math.min(2.5, viewport.width / 15));
+
+    const fontProps = { fontSize: fontSize, letterSpacing: -0.05, lineHeight: 1, "material-toneMapped": false };
     const ref = useRef<any>(null);
     const [hovered, setHovered] = useState(false);
     // Need to handle position prop carefully as it might be passed in props but we modify it.
@@ -52,12 +56,45 @@ function Word({ children, ...props }: any) {
     );
 }
 
+function Connections({ positions }: { positions: THREE.Vector3[] }) {
+    const { viewport } = useThree();
+    // Tune max distance based on viewport width to prevent overcrowding on smaller screens
+    const maxDist = Math.max(10, viewport.width / 4);
+
+    const lines = useMemo(() => {
+        const segments = [];
+        // Connect each point to its nearest neighbors or random ones
+        for (let i = 0; i < positions.length; i++) {
+            for (let j = i + 1; j < positions.length; j++) {
+                const dist = positions[i].distanceTo(positions[j]);
+                // Only connect if close enough to form a web, but scattered
+                if (dist < maxDist) {
+                    segments.push(positions[i], positions[j]);
+                }
+            }
+        }
+        return segments;
+    }, [positions, maxDist]);
+
+    return (
+        <Line
+            points={lines}
+            color="#a78bfa" // Violet-400
+            opacity={0.1}
+            transparent
+            lineWidth={1}
+        />
+    );
+}
+
 function Cloud({ count = 8, radius = 30 }) {
     const { viewport } = useThree();
 
     // Create a scattered distribution of words
-    const words = useMemo(() => {
-        const temp = [];
+    const { words, positions } = useMemo(() => {
+        const tempWords = [];
+        const tempPositions: THREE.Vector3[] = [];
+
         // Spread more randomly across the total width/height of the viewport
         for (let i = 0; i < skills.length; i++) {
             const skill = skills[i];
@@ -66,12 +103,20 @@ function Cloud({ count = 8, radius = 30 }) {
             const x = (Math.random() - 0.5) * viewport.width;
             const y = (Math.random() - 0.5) * viewport.height;
             const z = (Math.random() - 0.5) * 15; // Depth variation
-            temp.push([new THREE.Vector3(x, y, z), skill]);
+            const pos = new THREE.Vector3(x, y, z);
+
+            tempPositions.push(pos);
+            tempWords.push([pos, skill]);
         }
-        return temp;
+        return { words: tempWords, positions: tempPositions };
     }, [viewport.width, viewport.height]);
 
-    return words.map(([pos, word], index) => <Word key={index} position={pos} children={word} />);
+    return (
+        <>
+            <Connections positions={positions} />
+            {words.map(([pos, word], index) => <Word key={index} position={pos} children={word} />)}
+        </>
+    );
 }
 
 export default function SkillsCloud() {
