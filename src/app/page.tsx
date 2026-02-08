@@ -2,7 +2,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroCanvas from "@/components/3d/HeroCanvas";
 import SkillsCloud from "@/components/3d/SkillsCloud";
-import ContactShape from "@/components/3d/ContactShape";
 import { TiltCard, TiltCardContent } from "@/components/3d/TiltCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,7 +53,7 @@ export default async function Home() {
         </div>
         <div className="container mx-auto px-4 z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-violet-500 mb-6 drop-shadow-md">
-            Hi, I'm Mani
+            Hi, I'm Shiva Mani
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             Full Stack Developer specialized in building exceptional digital experiences.
@@ -194,9 +193,6 @@ export default async function Home() {
           </div>
 
           <Card className="p-6 shadow-lg border-primary/10">
-            <div className="mb-8">
-              <ContactShape />
-            </div>
             <form className="space-y-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Name</label>

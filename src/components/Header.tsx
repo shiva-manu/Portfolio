@@ -30,7 +30,7 @@ export default function Header() {
 
             <div className="hidden md:flex gap-4">
                 <Button asChild variant="outline" size="sm">
-                    <Link href="https://github.com" target="_blank">
+                    <Link href="https://github.com/shiva-manu" target="_blank">
                         GitHub
                     </Link>
                 </Button>
