@@ -11,11 +11,11 @@ export interface Repo {
 
 export async function getRepos(): Promise<Repo[]> {
     try {
-        // Artificial delay to demonstrate skeleton if needed
-        // await new Promise(resolve => setTimeout(resolve, 2000));
+        // Delay to show skeletons
+        await new Promise(resolve => setTimeout(resolve, 1500));
 
         const res = await fetch("https://api.github.com/users/shiva-manu/repos?sort=updated&per_page=6", {
-            next: { revalidate: 60 }, // Revalidate every minute
+            next: { revalidate: 60 },
         });
 
         if (!res.ok) {

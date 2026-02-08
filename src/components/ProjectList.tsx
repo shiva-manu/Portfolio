@@ -49,28 +49,26 @@ export function ProjectCard({ repo }: { repo: Repo }) {
 
 export function ProjectsSkeleton() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 min-h-[400px]">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-                <Card key={i} className="overflow-hidden flex flex-col h-full bg-card/50 border-muted">
-                    <Skeleton className="h-32 w-full rounded-none opacity-50" />
-                    <CardHeader className="flex-grow space-y-2">
-                        <Skeleton className="h-6 w-3/4" />
-                        <div className="space-y-1">
-                            <Skeleton className="h-4 w-full" />
-                            <Skeleton className="h-4 w-5/6" />
+                <div key={i} className="h-[380px] rounded-xl overflow-hidden border border-muted bg-card/40 flex flex-col">
+                    <Skeleton className="h-32 w-full rounded-none opacity-40" />
+                    <div className="p-6 flex-grow space-y-4">
+                        <Skeleton className="h-7 w-3/4 opacity-60" />
+                        <div className="space-y-2">
+                            <Skeleton className="h-4 w-full opacity-40" />
+                            <Skeleton className="h-4 w-5/6 opacity-40" />
                         </div>
-                    </CardHeader>
-                    <CardContent>
-                        <div className="flex gap-2">
-                            <Skeleton className="h-5 w-16" />
-                            <Skeleton className="h-5 w-16" />
+                        <div className="flex gap-2 pt-2">
+                            <Skeleton className="h-5 w-16 opacity-40 rounded-full" />
+                            <Skeleton className="h-5 w-16 opacity-40 rounded-full" />
                         </div>
-                    </CardContent>
-                    <CardFooter className="flex gap-2">
-                        <Skeleton className="h-9 flex-1" />
-                        <Skeleton className="h-9 flex-1" />
-                    </CardFooter>
-                </Card>
+                    </div>
+                    <div className="p-6 pt-0 flex gap-4">
+                        <Skeleton className="h-9 flex-1 opacity-20" />
+                        <Skeleton className="h-9 flex-1 opacity-20" />
+                    </div>
+                </div>
             ))}
         </div>
     );
