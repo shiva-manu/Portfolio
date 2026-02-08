@@ -1,46 +1,18 @@
+import Link from "next/link";
+import { Suspense } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import HeroCanvas from "@/components/3d/HeroCanvas";
 import SkillsCloud from "@/components/3d/SkillsCloud";
-import { TiltCard, TiltCardContent } from "@/components/3d/TiltCard";
+import ProjectList, { ProjectsSkeleton } from "@/components/ProjectList";
+import { TiltCard } from "@/components/3d/TiltCard";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-interface Repo {
-  id: number;
-  name: string;
-  description: string;
-  html_url: string;
-  stargazers_count: number;
-  language: string;
-  updated_at: string;
-  homepage?: string | null;
-}
-
-async function getRepos(): Promise<Repo[]> {
-  try {
-    const res = await fetch("https://api.github.com/users/shiva-manu/repos?sort=updated&per_page=6", {
-      next: { revalidate: 60 }, // Revalidate every minute
-    });
-
-    if (!res.ok) {
-      console.error("Failed to fetch repos", res.statusText);
-      return [];
-    }
-
-    return res.json();
-  } catch (error) {
-    console.error("Error fetching repos", error);
-    return [];
-  }
-}
-
-export default async function Home() {
-  const repos = await getRepos();
-
+export default function Home() {
   return (
     <div className="flex flex-col min-h-screen font-sans">
       <Header />
@@ -53,18 +25,18 @@ export default async function Home() {
         </div>
         <div className="container mx-auto px-4 z-10 text-center">
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-violet-500 mb-6 drop-shadow-md">
-            Hi, I'm Shiva Mani
+            Hi, I&apos;m Shiva Mani
           </h1>
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
             Full Stack Developer specialized in building exceptional digital experiences.
             Focused on performance, aesthetics, and user interaction.
           </p>
           <div className="flex gap-4 justify-center">
-            <Button size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90 shadow-lg text-primary-foreground font-medium">
-              View Work
+            <Button size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90 shadow-lg text-primary-foreground font-medium" asChild>
+              <Link href="#projects">View Work</Link>
             </Button>
-            <Button size="lg" variant="outline" className="rounded-full px-8 border-2 border-primary/20 hover:border-primary/50 text-foreground font-medium backdrop-blur-sm">
-              Contact Me
+            <Button size="lg" variant="outline" className="rounded-full px-8 border-2 border-primary/20 hover:border-primary/50 text-foreground font-medium backdrop-blur-sm" asChild>
+              <Link href="#contact">Contact Me</Link>
             </Button>
           </div>
         </div>
@@ -75,7 +47,7 @@ export default async function Home() {
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold tracking-tight mb-4 drop-shadow-sm">About Me</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto backdrop-blur-sm bg-background/30 p-4 rounded-lg">
-              I'm passionate about creating beautiful and functional web applications.
+              I&apos;m passionate about creating beautiful and functional web applications.
               With expertise in modern frontend frameworks and backend technologies,
               I bring ideas to life with clean code and intuitive design.
             </p>
@@ -132,53 +104,9 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {repos.length > 0 ? (
-              repos.map((repo) => (
-                <TiltCard key={repo.id} className="h-full">
-                  <Card className="overflow-hidden group transition-all duration-300 border-muted flex flex-col h-full bg-card/80 backdrop-blur-sm hover:border-primary/50">
-                    <TiltCardContent className="transform-style-3d">
-                      <div className="h-32 bg-muted/50 relative overflow-hidden flex-shrink-0 flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                        <div className="absolute inset-0 flex items-center justify-center text-muted-foreground/30 text-2xl font-bold uppercase px-4 text-center [transform:translateZ(20px)]">
-                          {repo.name}
-                        </div>
-                      </div>
-                    </TiltCardContent>
-                    <CardHeader className="flex-grow">
-                      <CardTitle className="truncate text-xl" title={repo.name}>{repo.name}</CardTitle>
-                      <CardDescription className="line-clamp-3">
-                        {repo.description || "No description available for this project."}
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {repo.language && <Badge variant="outline" className="border-primary/30">{repo.language}</Badge>}
-                        <Badge variant="secondary" className="bg-primary/10">⭐ {repo.stargazers_count}</Badge>
-                      </div>
-                    </CardContent>
-                    <CardFooter className="mt-auto flex gap-2">
-                      <Button asChild variant="ghost" className="flex-1 hover:bg-primary/20 group-hover:text-primary transition-colors text-xs px-2">
-                        <a href={repo.html_url} target="_blank" rel="noopener noreferrer">
-                          Repo &rarr;
-                        </a>
-                      </Button>
-                      {repo.homepage && (
-                        <Button asChild variant="outline" className="flex-1 border-primary/20 hover:bg-primary/10 text-xs px-2">
-                          <a href={repo.homepage} target="_blank" rel="noopener noreferrer">
-                            Live Demo ↗
-                          </a>
-                        </Button>
-                      )}
-                    </CardFooter>
-                  </Card>
-                </TiltCard>
-              ))
-            ) : (
-              <div className="col-span-full text-center text-muted-foreground">
-                No projects found or failed to load. Check back later!
-              </div>
-            )}
-          </div>
+          <Suspense fallback={<ProjectsSkeleton />}>
+            <ProjectList />
+          </Suspense>
         </div>
       </section>
 
@@ -218,3 +146,4 @@ export default async function Home() {
     </div>
   );
 }
+
