@@ -24,7 +24,7 @@ interface Repo {
 async function getRepos(): Promise<Repo[]> {
   try {
     const res = await fetch("https://api.github.com/users/shiva-manu/repos?sort=updated&per_page=6", {
-      next: { revalidate: 3600 }, // Revalidate every hour
+      next: { revalidate: 60 }, // Revalidate every minute
     });
 
     if (!res.ok) {
